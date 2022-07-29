@@ -15,6 +15,15 @@ class UserModel {
       [username, classe, level, password],
     );
   }
+
+  public async getAll(): Promise<User[]> {
+    const result = await this.connection.query(
+      'SELECT id, username, classe, level, password FROM Trybesmith.Users',
+    );
+
+    const [rows] = result;
+    return rows as User[];
+  }
 }
 
 export default UserModel;
