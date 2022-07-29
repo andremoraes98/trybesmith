@@ -13,6 +13,12 @@ class UserController {
 
     return res.status(201).json({ token });
   };
+
+  public getAll = async (_req: Request, res: Response) => {
+    const result = await this.userService.getAll();
+
+    return res.status(200).json(result);
+  };
 }
 
 export default UserController;
