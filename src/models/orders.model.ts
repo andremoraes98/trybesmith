@@ -1,5 +1,5 @@
 import { Pool } from 'mysql2/promise';
-import Order from '../interfaces/order.interface';
+import { OrderProduct } from '../interfaces/order.interface';
 
 class OrderModel {
   connection: Pool;
@@ -8,7 +8,7 @@ class OrderModel {
     this.connection = connection;
   }
 
-  public async getAll(): Promise<Order[]> {
+  public async getAll(): Promise<OrderProduct[]> {
     const result = await this.connection.query(
       `SELECT
         O.id, O.userId, P.id as productsIds
@@ -18,7 +18,7 @@ class OrderModel {
     );
 
     const [rows] = result;
-    return rows as Order[];
+    return rows as OrderProduct[];
   }
 }
 
