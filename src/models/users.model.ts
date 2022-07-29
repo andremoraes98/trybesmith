@@ -11,7 +11,7 @@ class UserModel {
   public async create(user: User): Promise<void> {
     const { username, classe, level, password } = user;
     await this.connection.query<ResultSetHeader>(
-      'INSERT INTO Trybesmith.Products (name, amount, orderId) VALUES(?, ?, ?, ?)',
+      'INSERT INTO Trybesmith.Users (username, classe, level, password) VALUES (?, ?, ?, ?)',
       [username, classe, level, password],
     );
   }
