@@ -23,6 +23,12 @@ class UserService {
     const token = jwt.sign(payload, secret);
     return token;
   };
+
+  public async getAll(): Promise<User[]> {
+    const result = await this.userModel.getAll();
+
+    return result;
+  }
 }
 
 export default UserService;
