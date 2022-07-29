@@ -2,6 +2,7 @@ import express from 'express';
 import OrderController from './controllers/orders.controller';
 import ProductController from './controllers/products.controller';
 import UserController from './controllers/users.controller';
+import validateBody from './middleware/error-handler.middleware';
 
 const app = express();
 
@@ -13,7 +14,7 @@ const orderController = new OrderController();
 
 app.get('/products', productController.getAll);
 
-app.post('/products', productController.create);
+app.post('/products', validateBody, productController.create);
 
 app.post('/users', userController.create);
 
