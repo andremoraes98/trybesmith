@@ -19,7 +19,7 @@ class UserService {
 
   public generateToken = (username: string): string => {
     const payload = { data: { username } };
-    const secret = process.env.JWT_PASSWORD || 'secret';
+    const secret = 'secret';
     const token = jwt.sign(payload, secret);
     return token;
   };
