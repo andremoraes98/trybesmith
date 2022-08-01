@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import connection from '../models/connection';
 import UserModel from '../models/users.model';
-import User from '../interfaces/user.interface';
+import { User, Credentials } from '../interfaces/user.interface';
 
 dotenv.config();
 
@@ -26,6 +26,12 @@ class UserService {
 
   public async getAll(): Promise<User[]> {
     const result = await this.userModel.getAll();
+
+    return result;
+  }
+
+  public async getCredentialsWhereUsername(username: string): Promise<Credentials> {
+    const result = await this.userModel.getCredentialsWhereUsername(username);
 
     return result;
   }
