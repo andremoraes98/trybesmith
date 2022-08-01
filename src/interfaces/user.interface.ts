@@ -10,3 +10,12 @@ export interface Credentials {
   username: string,
   password: string
 }
+
+export class CustomError extends Error {
+  name: string;
+
+  constructor(name: string, message: string) {
+    super(message);
+    this.name = name;
+  }
+}
