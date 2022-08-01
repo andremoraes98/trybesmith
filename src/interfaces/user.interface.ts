@@ -1,5 +1,8 @@
-export interface User {
+export interface Indexable {
   id?: number,
+}
+
+export interface User extends Indexable {
   username: string,
   classe: string,
   level: number,
