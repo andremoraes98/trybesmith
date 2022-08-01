@@ -23,7 +23,7 @@ const validateCredentials = async (req: Request, res: Response, next: NextFuncti
 
   if (!dbCredential || dbCredential.password !== userCredential.password
   ) {
-    throw new CustomError('InvalidCredential', 'Username or password invalid');
+    throw new CustomError('InvalidCredential', 401, 'Username or password invalid');
   }
 
   next();
