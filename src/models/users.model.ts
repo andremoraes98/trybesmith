@@ -1,5 +1,5 @@
 import { Pool, ResultSetHeader, RowDataPacket } from 'mysql2/promise';
-import { User, Credentials } from '../interfaces/user.interface';
+import { User, Credentials, Indexable } from '../interfaces/user.interface';
 
 class UserModel {
   connection: Pool;
@@ -36,6 +36,16 @@ class UserModel {
 
     const [[row]] = result;
     return row as Credentials;
+  }
+
+  public async getIdWhereUnsername(username:string): Promise<Indexable> {
+    const result = await this.connection.query<RowDataPacket[]>(
+      'SELECT id FROM Trybesmith.Users WHERE username=?',
+      [username],
+    );
+
+    const [[row]] = result;
+    return row as Indexable;
   }
 }
 
