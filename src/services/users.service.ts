@@ -5,6 +5,7 @@ import UserModel from '../models/users.model';
 import { User, Credentials } from '../interfaces/user.interface';
 
 dotenv.config();
+const SECRET = 'secret';
 
 class UserService {
   public userModel: UserModel;
@@ -18,10 +19,14 @@ class UserService {
   }
 
   public generateToken = (username: string): string => {
-    const payload = { data: { username } };
-    const secret = 'secret';
-    const token = jwt.sign(payload, secret);
+    const payload = { username };
+    const token = jwt.sign(payload, SECRET);
     return token;
+  };
+
+  public getUsernameFromToken = (token: string) => {
+    const { username } = jwt.verify(token, SECRET);
+    return username;
   };
 
   public async getAll(): Promise<User[]> {
@@ -34,6 +39,13 @@ class UserService {
     const result = await this.userModel.getCredentialsWhereUsername(username);
 
     return result;
+  }
+
+  public async getIdWhereUsername(username: string): Promise<number> {
+    const result = await this.userModel.getIdWhereUsername(username);
+
+    const { id } = result;
+    return id as number;
   }
 }
 

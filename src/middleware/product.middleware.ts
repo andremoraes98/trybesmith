@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { CustomError } from '../interfaces/user.interface';
+import UserService from '../services/users.service';
+
+const userService = new UserService();
 
 const validateProductName = async (req: Request, res: Response, next: NextFunction) => {
   const { name } = req.body;
@@ -25,7 +28,21 @@ const validateProductAmount = async (req: Request, res: Response, next: NextFunc
   next();
 };
 
+const validateToken = async (req: Request, _res: Response, next: NextFunction) => {
+  // const { username } = req.body;
+  const { authorization: token } = req.headers;
+
+  if (!token) throw new CustomError('InvalidCredential', 'Token not found');
+
+  const username = userService.getUsernameFromToken(token);
+
+  return username;
+
+  next();
+};
+
 export {
   validateProductName,
   validateProductAmount,
+  validateToken,
 };

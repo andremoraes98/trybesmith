@@ -3,7 +3,10 @@ import OrderController from './controllers/orders.controller';
 import ProductController from './controllers/products.controller';
 import UserController from './controllers/users.controller';
 import validateUser from './middleware/user.middleware';
-import { validateProductName, validateProductAmount } from './middleware/product.middleware'; 
+import {
+  validateProductName,
+  validateProductAmount,
+  validateToken } from './middleware/product.middleware'; 
 import 'express-async-errors';
 import errorMiddleware from './middleware/error.middleware';
 
@@ -33,6 +36,8 @@ app.get('/users', userController.getAll);
 app.get('/orders', orderController.getAll);
 
 app.post('/login', validateUser.body, validateUser.credentials, userController.login);
+
+app.post('/orders', validateToken);
 
 app.use(errorMiddleware);
 
