@@ -1,25 +1,23 @@
 import { Request, Response, NextFunction } from 'express';
 import { CustomError } from '../interfaces/user.interface';
 
+const errors: Record<string, number> = {
+  ValidationError: 400,
+  TypeError: 422,
+  InvalidCredential: 401,
+};
+
 const errorMiddleware = (
   err: CustomError,
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const { name, message, httpCode } = err;
+  const { name, message } = err;
+  const httpCode = errors[name];
 
-  switch (name) {
-    case 'ValidationError':
-      res.status(400).json({ message });
-      break;
-    case 'InvalidCredential':
-      res.status(httpCode).json({ message });
-      break;
-    default:
-      console.log(err.message);
-      res.status(500).json({ message });
-  }
+  if (!httpCode) return res.status(500).json({ message: err.message });
+  res.status(httpCode).json({ message });
 
   next();
 };
