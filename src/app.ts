@@ -2,7 +2,7 @@ import express from 'express';
 import OrderController from './controllers/orders.controller';
 import ProductController from './controllers/products.controller';
 import UserController from './controllers/users.controller';
-import validateBody from './middleware/error-handler.middleware';
+import 'express-async-errors';
 
 const app = express();
 
@@ -14,12 +14,14 @@ const orderController = new OrderController();
 
 app.get('/products', productController.getAll);
 
-app.post('/products', validateBody, productController.create);
+app.post('/products', productController.create);
 
 app.post('/users', userController.create);
 
 app.get('/users', userController.getAll);
 
 app.get('/orders', orderController.getAll);
+
+app.post('/login', userController.login);
 
 export default app;
