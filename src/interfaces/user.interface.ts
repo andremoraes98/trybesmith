@@ -13,12 +13,9 @@ export interface Credentials {
 
 export class CustomError extends Error {
   name: string;
-  
-  httpCode: number;
 
-  constructor(name: string, httpCode: number, message: string) {
+  constructor(name: string, message: string) {
     super(message);
     this.name = name;
-    this.httpCode = httpCode;
   }
 }
