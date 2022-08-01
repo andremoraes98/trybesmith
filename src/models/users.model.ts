@@ -38,7 +38,7 @@ class UserModel {
     return row as Credentials;
   }
 
-  public async getIdWhereUnsername(username:string): Promise<Indexable> {
+  public async getIdWhereUsername(username:string): Promise<Indexable> {
     const result = await this.connection.query<RowDataPacket[]>(
       'SELECT id FROM Trybesmith.Users WHERE username=?',
       [username],
