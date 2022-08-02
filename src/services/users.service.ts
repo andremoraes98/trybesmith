@@ -25,6 +25,7 @@ class UserService {
   };
 
   public getUsernameFromToken = (token: string): Username => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data }: any = jwt.verify(token, SECRET);
 
     return data as Username;
