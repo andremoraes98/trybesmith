@@ -20,6 +20,10 @@ class ProductService {
 
     return result;
   }
+
+  public async updateOrderIdWhereProductId(orderId:number, productId: number): Promise<void> {
+    await this.productModel.updateOrderIdWhereProductId(orderId, productId);
+  }
 }
 
 export default ProductService;
