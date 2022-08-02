@@ -2,8 +2,11 @@ export interface Indexable {
   id?: number,
 }
 
-export interface User extends Indexable {
+export interface Username extends Indexable {
   username: string,
+}
+
+export interface User extends Username {
   classe: string,
   level: number,
   password: string
