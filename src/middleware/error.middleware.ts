@@ -5,6 +5,7 @@ const errors: Record<string, number> = {
   ValidationError: 400,
   TypeError: 422,
   InvalidCredential: 401,
+  JsonWebTokenError: 401,
 };
 
 const errorMiddleware = (
@@ -16,7 +17,9 @@ const errorMiddleware = (
   const { name, message } = err;
   const httpCode = errors[name];
 
-  if (!httpCode) return res.status(500).json({ message: err.message });
+  if (name === 'JsonWebTokenError') return res.status(httpCode).json({ message: 'Invalid token' });
+
+  if (!httpCode) return res.status(500).json({ message });
   res.status(httpCode).json({ message });
 
   next();

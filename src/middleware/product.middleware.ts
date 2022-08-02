@@ -30,13 +30,17 @@ const validateProductAmount = async (req: Request, res: Response, next: NextFunc
 
 const validateToken = async (req: Request, _res: Response, next: NextFunction) => {
   // const { username } = req.body;
-  const { authorization: token } = req.headers;
+  const { authorization: bearerToken } = req.headers;
+  
+  if (!bearerToken) throw new CustomError('InvalidCredential', 'Token not found');
+  
+  const token = bearerToken.replace('Bearer ', '');
 
-  if (!token) throw new CustomError('InvalidCredential', 'Token not found');
+  const { username } = userService.getUsernameFromToken(token);
 
-  const username = userService.getUsernameFromToken(token);
+  const userId = await userService.getIdWhereUsername(username);
 
-  return username;
+  if (!userId || !username) throw new CustomError('InvalidCredential', 'Invalid token');
 
   next();
 };
