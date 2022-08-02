@@ -43,6 +43,7 @@ app.post(
   '/orders',
   validateProduct.validToken,
   validateProduct.bodyProduct,
+  orderController.create,
 );
 
 app.use(errorMiddleware);
