@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import connection from '../models/connection';
 import UserModel from '../models/users.model';
-import { User, Credentials } from '../interfaces/user.interface';
+import { Username, User, Credentials, Indexable } from '../interfaces/user.interface';
 
 dotenv.config();
 const SECRET = 'secret';
@@ -19,14 +19,15 @@ class UserService {
   }
 
   public generateToken = (username: string): string => {
-    const payload = { username };
+    const payload = { data: { username } };
     const token = jwt.sign(payload, SECRET);
     return token;
   };
 
-  public getUsernameFromToken = (token: string) => {
-    const { username } = jwt.verify(token, SECRET);
-    return username;
+  public getUsernameFromToken = (token: string): Username => {
+    const { data }: any = jwt.verify(token, SECRET);
+
+    return data as Username;
   };
 
   public async getAll(): Promise<User[]> {
@@ -41,11 +42,10 @@ class UserService {
     return result;
   }
 
-  public async getIdWhereUsername(username: string): Promise<number> {
+  public async getIdWhereUsername(username: string): Promise<Indexable | undefined> {
     const result = await this.userModel.getIdWhereUsername(username);
 
-    const { id } = result;
-    return id as number;
+    return result;
   }
 }
 
