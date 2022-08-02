@@ -3,12 +3,9 @@ import OrderController from './controllers/orders.controller';
 import ProductController from './controllers/products.controller';
 import UserController from './controllers/users.controller';
 import validateUser from './middleware/user.middleware';
-import {
-  validateProductName,
-  validateProductAmount,
-  validateToken } from './middleware/product.middleware'; 
-import 'express-async-errors';
+import validateProduct from './middleware/product.middleware'; 
 import errorMiddleware from './middleware/error.middleware';
+import 'express-async-errors';
 
 const app = express();
 
@@ -20,7 +17,12 @@ const orderController = new OrderController();
 
 app.get('/products', productController.getAll);
 
-app.post('/products', validateProductName, validateProductAmount, productController.create);
+app.post(
+  '/products',
+  validateProduct.productName,
+  validateProduct.productAmount,
+  productController.create,
+);
 
 app.post(
   '/users',
@@ -37,7 +39,11 @@ app.get('/orders', orderController.getAll);
 
 app.post('/login', validateUser.body, validateUser.credentials, userController.login);
 
-app.post('/orders', validateToken);
+app.post(
+  '/orders',
+  validateProduct.validToken,
+  validateProduct.bodyProduct,
+);
 
 app.use(errorMiddleware);
 
