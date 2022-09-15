@@ -1,15 +1,18 @@
+import swaggerUi from 'swagger-ui-express';
 import express from 'express';
+import 'express-async-errors';
 import OrderController from './controllers/orders.controller';
 import ProductController from './controllers/products.controller';
 import UserController from './controllers/users.controller';
 import validateUser from './middleware/user.middleware';
 import validateProduct from './middleware/product.middleware'; 
 import errorMiddleware from './middleware/error.middleware';
-import 'express-async-errors';
+import swaggerFile from '../swagger_output.json';
 
 const app = express();
 
 app.use(express.json());
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 const productController = new ProductController();
 const userController = new UserController();
