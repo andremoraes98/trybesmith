@@ -1,10 +1,12 @@
 # Projeto TrybeSmith
 
-![Project logo]()
+![Project logo](./src//images/DOC_SWAGGER.png)
 
 Este foi o primeiro projeto o qual utilizamos o TypeScript!
 
 Ficamos responsáveis por desenvolver uma API através da arquitetura MSC, utilizando o MySQL2 para conectar com o banco de dados e executar as *queries* SQL.
+
+Para acessar a documentação, é preciso rodar a aplicação e fazer uma requisição ``GET`` com o endpoint ``/doc``.
 
 ---
 
